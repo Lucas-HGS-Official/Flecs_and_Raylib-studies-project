@@ -17,10 +17,39 @@ typedef struct GoblinStats {
 } GoblinStats;
 
 int main(int argc, char *argv[]) {
-// Creating and naming a simple entity
-    ecs_world_t *world = ecs_init();
+// Creating a flecs world
+    ecs_world_t* world = ecs_init();
+
+// Declaring components
+    ECS_COMPONENT(world, Position);
+    ECS_COMPONENT(world, GoblinStats);
+
+// Creating and naming simple entities
     ecs_entity_t lhgs = ecs_entity(world, {.name = "LucasHGS"});
-    printf("My entity's name is %s\n", ecs_get_name(world, lhgs));
+    ecs_entity_t lucas = ecs_new(world);
+
+// Adding components to entities
+    ecs_add(world, lhgs, Position);
+    ecs_add(world, lucas, Position);
+    ecs_add(world, lhgs, GoblinStats);
+    ecs_add(world, lucas, GoblinStats);
+
+// Setting components values for the entities
+    ecs_set(world, lhgs, Position, { 10, 2 });
+    ecs_set(world, lhgs, GoblinStats, {
+        .health = 10;
+        .damage = 5;
+        .amountOfGold = 2
+        .clanName = "5o1st"
+    });
+
+    ecs_set(world, lucas, Position, { 12, 2 });ecs_set(world, lhgs, Position, { 10, 2 });
+    ecs_set(world, lhgs, GoblinStats, {
+        .health = 7;
+        .damage = 3;
+        .amountOfGold = 3
+        .clanName = "5o1st"
+    });
 }
 
 // cc -o game src/game.c libs/flecs.c -Iinclude -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
