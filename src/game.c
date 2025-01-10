@@ -3,12 +3,13 @@
 #include "rlgl.h"
 #include "flecs.h"
 
-int main(int argc, char *argv[]) {
 // Creating a simple component
     typedef struct Position {
-
+        float x;
+        float y;
     } Position;
 
+int main(int argc, char *argv[]) {
 // Creating and naming a simple entity
     ecs_world_t *world = ecs_init();
     ecs_entity_t lhgs = ecs_entity(world, {.name = "LucasHGS"});
