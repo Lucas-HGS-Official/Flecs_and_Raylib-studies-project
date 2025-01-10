@@ -4,10 +4,17 @@
 #include "flecs.h"
 
 // Creating a simple component
-    typedef struct Position {
-        float x;
-        float y;
-    } Position;
+typedef struct Position {
+    float x;
+    float y;
+} Position;
+
+typedef struct GoblinStats {
+    int health;
+    int damage;
+    int amountOfGold;
+    char* clanName;
+} GoblinStats;
 
 int main(int argc, char *argv[]) {
 // Creating and naming a simple entity
