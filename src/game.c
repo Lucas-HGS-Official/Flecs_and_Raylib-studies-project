@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     ecs_add(world, lhgs, GoblinStats);
     ecs_add(world, lucas, GoblinStats);
 
-// Setting components values for the entities
+// Setting component values for the entities
     ecs_set(world, lhgs, Position, { 10, 2 });
     ecs_set(world, lhgs, GoblinStats, {
         .health = 10;
@@ -50,6 +50,10 @@ int main(int argc, char *argv[]) {
         .amountOfGold = 3
         .clanName = "5o1st"
     });
+
+// Changing component values for the entities
+    GoblinStats *lucasStats = ecs_get_mut(world, lucas, GoblinStats);
+    lucasStats->clanName = "renegade";
 }
 
 // cc -o game src/game.c libs/flecs.c -Iinclude -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
