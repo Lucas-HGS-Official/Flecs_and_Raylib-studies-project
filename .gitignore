@@ -1,0 +1,5 @@
+.bake_cache
+.DS_Store
+gcov
+bin
+vc140.pdb
