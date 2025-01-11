@@ -25,12 +25,27 @@ int main(int argc, char* argv[]) {
     ECS_COMPONENT(world, GoblinStats);
 
 // Creating and naming simple entities
-    ecs_entity_t lhgs = ecs_entity(world, {.name = "LucasHGS"});
+    ecs_entity_t lhgs = ecs_entity(world, { .name = "LucasHGS" });
     ecs_entity_t lucas = ecs_new(world);
+
+    ecs_entity_t bob = ecs_entity(world, { .name = "Bob" });
+    ecs_entity_t alice = ecs_entity(world, { .name = "Alice" });
+
+    ecs_entity_t jacob = ecs_entity(world, { .name = "Jacob" });
+    ecs_entity_t evan = ecs_entity(world, { .name = "Evan" });
+
+// Creating types of entity relations
+    ecs_entity_t likes = ecs_new(world);
 
 // Creating tags, Captal case by convention
     ecs_entity_t Good = ecs_new(world);
     ecs_entity_t Bad = ecs_new(world);
+
+// Creating relations between entities
+    ecs_add_pair(world, bob, likes, alice);
+    ecs_add_pair(world, alice, likes, bob);
+    // EcsChildOf relation
+    ecs_add_pair(world, evan, EcsChildOf, jacob);
 
 // Adding components to entities
     ecs_add(world, lhgs, Position);
@@ -67,6 +82,17 @@ int main(int argc, char* argv[]) {
 // Checking for tags
     if (ecs_has_id(world, lucas, Good)) {
         printf("Lucas is good doer.\n");
+    }
+
+// Checking for relations
+    if (ecs_has_pair(world, bob, likes, alice)) {
+        printf("Bob does like Alice\n");
+    }
+    if (ecs_has_pair(world, evan, EcsChildOf, jacob)) {
+        char* pathToEvan = ecs_get_path(world, evan);
+        printf("Path to Evan is %s\n", pathToEvan);
+
+        ecs_os_free(pathToEvan);
     }
 }
 
