@@ -16,6 +16,19 @@ typedef struct GoblinStats {
     char* clanName;
 } GoblinStats;
 
+typedef struct Dog {
+    float weight;
+    int age;
+} Dog;
+
+typedef struct Chihuahua {
+    int agressionLevel;
+} Chihuahua;
+
+typedef struct Greyhound {
+    bool isAsleep;
+} Greyhound;
+
 int main(int argc, char* argv[]) {
 // Creating a flecs world
     ecs_world_t* world = ecs_init();
@@ -23,6 +36,10 @@ int main(int argc, char* argv[]) {
 // Declaring components
     ECS_COMPONENT(world, Position);
     ECS_COMPONENT(world, GoblinStats);
+
+    ECS_COMPONENT(world, Dog);
+    ECS_COMPONENT(world, Chihuahua);
+    ECS_COMPONENT(world, Greyhound);
 
 // Creating and naming simple entities
     ecs_entity_t lhgs = ecs_entity(world, { .name = "LucasHGS" });
