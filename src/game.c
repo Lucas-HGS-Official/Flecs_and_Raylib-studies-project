@@ -16,7 +16,7 @@ typedef struct GoblinStats {
     char* clanName;
 } GoblinStats;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 // Creating a flecs world
     ecs_world_t* world = ecs_init();
 
@@ -27,6 +27,10 @@ int main(int argc, char *argv[]) {
 // Creating and naming simple entities
     ecs_entity_t lhgs = ecs_entity(world, {.name = "LucasHGS"});
     ecs_entity_t lucas = ecs_new(world);
+
+// Creating tags, Captal case by convention
+    ecs_entity_t Good = ecs_new(world);
+    ecs_entity_t Bad = ecs_new(world);
 
 // Adding components to entities
     ecs_add(world, lhgs, Position);
@@ -55,6 +59,10 @@ int main(int argc, char *argv[]) {
 // Changing component values for the entities
     GoblinStats *lucasStats = ecs_get_mut(world, lucas, GoblinStats);
     lucasStats->clanName = "renegade";
+
+// Adding tags to entities
+    ecs_add_id(world, lhgs, Bad);
+    ecs_add_id(world, lucas, Good);
 }
 
 // cc -o game src/game.c libs/flecs.c -Iinclude -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
