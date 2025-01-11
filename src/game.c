@@ -30,24 +30,26 @@ int main(int argc, char *argv[]) {
 
 // Adding components to entities
     ecs_add(world, lhgs, Position);
-    ecs_add(world, lucas, Position);
     ecs_add(world, lhgs, GoblinStats);
+    
+    ecs_add(world, lucas, Position);
     ecs_add(world, lucas, GoblinStats);
 
 // Setting component values for the entities
     ecs_set(world, lhgs, Position, { 10, 2 });
     ecs_set(world, lhgs, GoblinStats, {
-        .health = 10;
-        .damage = 5;
-        .amountOfGold = 2
+        .health = 10,
+        .damage = 5,
+        .amountOfGold = 2,
         .clanName = "5o1st"
     });
 
-    ecs_set(world, lucas, Position, { 12, 2 });ecs_set(world, lhgs, Position, { 10, 2 });
+    ecs_set(world, lucas, Position, { 12, 2 });
+    ecs_set(world, lhgs, Position, { 10, 2 });
     ecs_set(world, lhgs, GoblinStats, {
-        .health = 7;
-        .damage = 3;
-        .amountOfGold = 3
+        .health = 7,
+        .damage = 3,
+        .amountOfGold = 3,
         .clanName = "5o1st"
     });
 
