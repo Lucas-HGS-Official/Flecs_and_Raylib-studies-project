@@ -63,6 +63,11 @@ int main(int argc, char* argv[]) {
 // Adding tags to entities
     ecs_add_id(world, lhgs, Bad);
     ecs_add_id(world, lucas, Good);
+
+// Checking for tags
+    if (ecs_has_id(world, lucas, Good)) {
+        printf("Lucas is good doer.\n");
+    }
 }
 
 // cc -o game src/game.c libs/flecs.c -Iinclude -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
