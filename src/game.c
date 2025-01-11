@@ -45,8 +45,7 @@ int main(int argc, char *argv[]) {
     });
 
     ecs_set(world, lucas, Position, { 12, 2 });
-    ecs_set(world, lhgs, Position, { 10, 2 });
-    ecs_set(world, lhgs, GoblinStats, {
+    ecs_set(world, lucas, GoblinStats, {
         .health = 7,
         .damage = 3,
         .amountOfGold = 3,
