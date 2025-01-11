@@ -51,6 +51,12 @@ int main(int argc, char* argv[]) {
     ecs_entity_t jacob = ecs_entity(world, { .name = "Jacob" });
     ecs_entity_t evan = ecs_entity(world, { .name = "Evan" });
 
+    // Adding the EcsPrefab tag
+    ecs_entity_t dog = ecs_entity(world, {
+        .name = "Dog",
+        .add = ecs_ids(EcsPrefab)
+    });
+
 // Creating types of entity relations
     ecs_entity_t likes = ecs_new(world);
 
@@ -58,18 +64,14 @@ int main(int argc, char* argv[]) {
     ecs_entity_t Good = ecs_new(world);
     ecs_entity_t Bad = ecs_new(world);
 
-// Creating relations between entities
-    ecs_add_pair(world, bob, likes, alice);
-    ecs_add_pair(world, alice, likes, bob);
-    // EcsChildOf relation
-    ecs_add_pair(world, evan, EcsChildOf, jacob);
-
 // Adding components to entities
     ecs_add(world, lhgs, Position);
     ecs_add(world, lhgs, GoblinStats);
     
     ecs_add(world, lucas, Position);
     ecs_add(world, lucas, GoblinStats);
+
+    ecs_add(world, dog, Dog);
 
 // Setting component values for the entities
     ecs_set(world, lhgs, Position, { 10, 2 });
@@ -87,6 +89,16 @@ int main(int argc, char* argv[]) {
         .amountOfGold = 3,
         .clanName = "5o1st"
     });
+
+    ecs_set(world, dog, Dog, { .weight = 2.5f, .age = 4 });
+
+// Creating relations between entities
+    ecs_add_pair(world, bob, likes, alice);
+    ecs_add_pair(world, alice, likes, bob);
+    // EcsChildOf relation
+    ecs_add_pair(world, evan, EcsChildOf, jacob);
+    // Prefab
+    ecs_add_pair(world, Chihuahua, EcsIsA, dog);
 
 // Changing component values for the entities
     GoblinStats *lucasStats = ecs_get_mut(world, lucas, GoblinStats);
