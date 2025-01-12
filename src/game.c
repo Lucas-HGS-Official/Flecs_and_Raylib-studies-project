@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
         .name = "Dog",
         .add = ecs_ids(EcsPrefab)
     });
-    ecs_entity_t chihuahua = ecs_entity(world, { .name = "Chihuahua" });
+    ecs_entity_t chihuahua = ecs_new(world);
 
 // Creating types of entity relations
     ecs_entity_t likes = ecs_new(world);
@@ -73,6 +73,7 @@ int main(int argc, char* argv[]) {
     ecs_add(world, lucas, GoblinStats);
 
     ecs_add(world, dog, Dog);
+    ecs_add(world, chihuahua, Chihuahua);
 
 // Setting component values for the entities
     ecs_set(world, lhgs, Position, { 10, 2 });
@@ -92,6 +93,7 @@ int main(int argc, char* argv[]) {
     });
 
     ecs_set(world, dog, Dog, { .weight = 2.5f, .age = 4 });
+    ecs_set(world, chihuahua, Chihuahua, { .agressionLevel = 5 });
 
 // Creating relations between entities
     ecs_add_pair(world, bob, likes, alice);
