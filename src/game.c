@@ -9,6 +9,11 @@ typedef struct Position {
     float y;
 } Position;
 
+typedef struct Elder {
+    int age;
+    bool isWise;
+} Elder;
+
 typedef struct GoblinStats {
     int health;
     int damage;
@@ -35,6 +40,7 @@ int main(int argc, char* argv[]) {
 
 // Declaring components
     ECS_COMPONENT(world, Position);
+    ECS_COMPONENT(world, Elder);
     ECS_COMPONENT(world, GoblinStats);
 
     ECS_COMPONENT(world, Dog);
@@ -57,6 +63,10 @@ int main(int argc, char* argv[]) {
         .add = ecs_ids(EcsPrefab)
     });
     ecs_entity_t chihuahua = ecs_new(world);
+
+    ecs_entity_t kweebeck1 = ecs_entity(world, { .name = "kweebeck 1" });
+    ecs_entity_t kweebeck2 = ecs_entity(world, { .name = "kweebeck 2" });
+    ecs_entity_t kweebeck3 = ecs_entity(world, { .name = "kweebeck 3" });
 
 // Creating types of entity relations
     ecs_entity_t likes = ecs_new(world);
@@ -95,6 +105,15 @@ int main(int argc, char* argv[]) {
     ecs_set(world, dog, Dog, { .weight = 2.5f, .age = 4 });
     ecs_set(world, chihuahua, Chihuahua, { .agressionLevel = 5 });
 
+// Adding components to entities and Setting their values (ecs_add() is not mandatory)
+    ecs_set(world, kweebeck1, Position, { 4, 7 });
+    ecs_set(world, kweebeck1, Elder, { 200, true });
+
+    ecs_set(world, kweebeck2, Position, { 1, 8 });
+
+    ecs_set(world, kweebeck3, Position, { 5, 9 });
+    ecs_set(world, kweebeck3, Elder, { 250, true });
+
 // Creating relations between entities
     ecs_add_pair(world, bob, likes, alice);
     ecs_add_pair(world, alice, likes, bob);
@@ -126,8 +145,22 @@ int main(int argc, char* argv[]) {
 
         ecs_os_free(pathToEvan);
     }
-
+// Looks for Evan
     ecs_entity_t evanFromParent = ecs_lookup(world, "Jacob.Evan");
+
+// Creating queries
+    ecs_query_t* kweebeckQueryPos = ecs_query(world, {
+        .terms = {
+            { .id = ecs_id(Position) }
+        }
+    }); // Returns all 3 kweebeck
+
+    ecs_query_t* kweebeckQueryPosAndElder = ecs_query(world, {
+        .terms = {
+            { .id = ecs_id(Position) }
+            { .id = ecs_id(Elder) }
+        }
+    }); // Returns kweebeck 1 and kweebeck 3
 }
 
 // cc -o game src/game.c libs/flecs.c -Iinclude -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
