@@ -56,6 +56,7 @@ int main(int argc, char* argv[]) {
         .name = "Dog",
         .add = ecs_ids(EcsPrefab)
     });
+    ecs_entity_t chihuahua = ecs_entity(world, { .name = "Chihuahua" });
 
 // Creating types of entity relations
     ecs_entity_t likes = ecs_new(world);
@@ -98,7 +99,7 @@ int main(int argc, char* argv[]) {
     // EcsChildOf relation
     ecs_add_pair(world, evan, EcsChildOf, jacob);
     // Prefab
-    ecs_add_pair(world, Chihuahua, EcsIsA, dog);
+    ecs_add_pair(world, chihuahua, EcsIsA, dog);
 
 // Changing component values for the entities
     GoblinStats *lucasStats = ecs_get_mut(world, lucas, GoblinStats);
@@ -123,6 +124,8 @@ int main(int argc, char* argv[]) {
 
         ecs_os_free(pathToEvan);
     }
+
+    ecs_entity_t evanFromParent = ecs_lookup(world, "Jacob.Evan");
 }
 
 // cc -o game src/game.c libs/flecs.c -Iinclude -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
