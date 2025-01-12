@@ -163,14 +163,31 @@ int main(int argc, char* argv[]) {
     }); // Returns kweebeck 1 and kweebeck 3
 
 // Creating a iterator
-    ecs_iter_t it = ecs_query_iter(world, kweebeckQueryPosAndElder);
-
+    ecs_iter_t it = ecs_query_iter(world, kweebeckQueryPos);
     // Loob through all of the types from the query
     while (ecs_iter_next(&it)) {
         // Loop through the entities of this type
         for (int i = 0; i < it.count; i++) {
             ecs_entity_t kweebeck = it.entities[i];
             printf("Name: %s\n", ecs_get_name(world, kweebeck));
+        }
+    }
+
+    ecs_iter_t it2 = ecs_query_iter(world, kweebeckQueryPosAndElder);
+    while (ecs_iter_next(&it2)) {
+        // Getting the components from all of the queried entities
+        Position* allPositions = ecs_field(&it, Position, 0);
+        Elder* allElders = ecs_field(&it, Elder, 1);
+
+        for (int i = 0; i < it.count; i++) {
+            ecs_entity_t kweebeck = it.entities[i];
+            printf("Name: %s\n", ecs_get_name(world, kweebeck));
+
+            Position kweebeckPos = allPositions[i];
+            printf("Position: { %f, %f }\n", kweebeckPos.x, kweebeckPos.y);
+
+            Elder kweebeckElder = allElders[i];
+            printf("The elder's age is %d and is wise is: %d", kweebeckElder.age, kweebeckElder.isWise);
         }
     }
 }
