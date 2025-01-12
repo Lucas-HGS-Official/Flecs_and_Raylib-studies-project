@@ -158,9 +158,19 @@ int main(int argc, char* argv[]) {
     ecs_query_t* kweebeckQueryPosAndElder = ecs_query(world, {
         .terms = {
             { .id = ecs_id(Position) }
-            { .id = ecs_id(Elder) }
+            { .id = ecs_id(Elder), .inout = EcsIn /* Adding a access modifier, Read Only mode*/ }
         }
     }); // Returns kweebeck 1 and kweebeck 3
+
+    /*
+    All access modifiers:
+        EcsIn for read only;
+        EcsOut for write only;
+        EcsInOut for read/write, this is the default;
+        EcsNone for no read or write, to make sure entities have this component
+    */
+
+
 
 // Creating a iterator
     ecs_iter_t it = ecs_query_iter(world, kweebeckQueryPos);
@@ -177,7 +187,7 @@ int main(int argc, char* argv[]) {
     while (ecs_iter_next(&it2)) {
         // Getting the components from all of the queried entities
         Position* allPositions = ecs_field(&it, Position, 0);
-        Elder* allElders = ecs_field(&it, Elder, 1);
+        const Elder* allElders = ecs_field(&it, Elder, 1);
 
         for (int i = 0; i < it.count; i++) {
             ecs_entity_t kweebeck = it.entities[i];
