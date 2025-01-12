@@ -161,6 +161,18 @@ int main(int argc, char* argv[]) {
             { .id = ecs_id(Elder) }
         }
     }); // Returns kweebeck 1 and kweebeck 3
+
+// Creating a iterator
+    ecs_iter_t it = ecs_query_iter(world, kweebeckQueryPosAndElder);
+
+    // Loob through all of the types from the query
+    while (ecs_iter_next(&it)) {
+        // Loop through the entities of this type
+        for (int i = 0; i < it.count; i++) {
+            ecs_entity_t kweebeck = it.entities[i];
+            printf("Name: %s\n", ecs_get_name(world, kweebeck));
+        }
+    }
 }
 
 // cc -o game src/game.c libs/flecs.c -Iinclude -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
