@@ -157,7 +157,7 @@ int main(int argc, char* argv[]) {
 
     ecs_query_t* kweebeckQueryPosAndElder = ecs_query(world, {
         .terms = {
-            { .id = ecs_id(Position) }
+            { .id = ecs_id(Position) },
             { .id = ecs_id(Elder), .inout = EcsIn /* Adding a access modifier, Read Only mode*/ }
         }
     }); // Returns kweebeck 1 and kweebeck 3
