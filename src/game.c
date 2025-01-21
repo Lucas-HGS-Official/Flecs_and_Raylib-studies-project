@@ -157,12 +157,17 @@ int main(int argc, char* argv[]) {
 
     ecs_query_t* kweebeckQueryPosAndElder = ecs_query(world, {
         .terms = {
-            { .id = ecs_id(Position) },
+            { .id = ecs_id(Position), .oper = EcsOr  /* Adding a Query Operator */},
             { .id = ecs_id(Elder), .inout = EcsIn /* Adding a access modifier, Read Only mode*/ }
         }
     }); // Returns kweebeck 1 and kweebeck 3
 
     /*
+    All Query Operators:
+        EcsAnd forces the queried entities to have this component and another, this is the default for all components demands in a query;
+        EcsOr allows the queried entities to not have all components demands in a query;
+        EcsNot forces the queries entities to not have this component;
+
     All access modifiers:
         EcsIn for read only;
         EcsOut for write only;
