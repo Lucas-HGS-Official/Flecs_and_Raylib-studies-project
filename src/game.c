@@ -74,6 +74,7 @@ int main(int argc, char* argv[]) {
 // Creating tags, Captal case by convention
     ecs_entity_t Good = ecs_new(world);
     ecs_entity_t Bad = ecs_new(world);
+    ECS_TAG(world, FriendsWith);
 
 // Adding components to entities
     ecs_add(world, lhgs, Position);
