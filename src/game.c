@@ -190,6 +190,15 @@ int main(int argc, char* argv[]) {
 
     ecs_iter_t it2 = ecs_query_iter(world, kweebeckQueryPosAndElder);
     while (ecs_iter_next(&it2)) {
+        // Getting the first component from an itarator in a generic fashion
+        ecs_id_t component = ecs_field_id(&it2, 0);
+        for (int i = 0; i < it2.count; i++) {
+            if (component == ecs_id(Position)) {
+                Position *pos = ecs_table_get_id(world, it2.table, ecs_id(Position), it2.offset + i);
+            } else if (component == ecs_id(Elder)) {
+                Elder *pos = ecs_table_get_id(world, it2.table, ecs_id(Elder), it2.offset + i);
+            }
+        }
         // Getting the components from all of the queried entities
         Position* allPositions = ecs_field(&it, Position, 0);
         const Elder* allElders = ecs_field(&it, Elder, 1);
