@@ -119,6 +119,10 @@ int main(int argc, char* argv[]) {
     ecs_add_pair(world, alice, likes, bob);
     // EcsChildOf relation
     ecs_add_pair(world, evan, EcsChildOf, jacob);
+
+    ecs_add_pair(world, kweebeck1, EcsChildOf, kweebeck3);
+    ecs_add_pair(world, kweebeck2, EcsChildOf, kweebeck3);
+
     // Prefab
     ecs_add_pair(world, chihuahua, EcsIsA, dog);
 
@@ -175,6 +179,12 @@ int main(int argc, char* argv[]) {
         EcsNone for no read or write, to make sure entities have this component
     */
 
+   ecs_query_t* kweebeckQueryChildren = ecs_query(world, {
+    .terms = {
+        { .id = ecs_pair(EcsChildOf, kweebeck3) }
+    }
+   });
+
 
 
 // Creating a iterator
@@ -194,9 +204,9 @@ int main(int argc, char* argv[]) {
         ecs_id_t component = ecs_field_id(&it2, 0);
         for (int i = 0; i < it2.count; i++) {
             if (component == ecs_id(Position)) {
-                Position *pos = ecs_table_get_id(world, it2.table, ecs_id(Position), it2.offset + i);
+                Position* pos = ecs_table_get_id(world, it2.table, ecs_id(Position), it2.offset + i);
             } else if (component == ecs_id(Elder)) {
-                Elder *pos = ecs_table_get_id(world, it2.table, ecs_id(Elder), it2.offset + i);
+                Elder* pos = ecs_table_get_id(world, it2.table, ecs_id(Elder), it2.offset + i);
             }
         }
         // Getting the components from all of the queried entities
