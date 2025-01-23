@@ -67,14 +67,15 @@ int main(int argc, char* argv[]) {
     ecs_entity_t kweebeck1 = ecs_entity(world, { .name = "kweebeck 1" });
     ecs_entity_t kweebeck2 = ecs_entity(world, { .name = "kweebeck 2" });
     ecs_entity_t kweebeck3 = ecs_entity(world, { .name = "kweebeck 3" });
+    ecs_entity_t kweebeck4 = ecs_entity(world, { .name = "kweeback 4" });
 
 // Creating types of entity relations
     ecs_entity_t likes = ecs_new(world);
+    ECS_TAG(world, FriendsWith);
 
 // Creating tags, Captal case by convention
     ecs_entity_t Good = ecs_new(world);
     ecs_entity_t Bad = ecs_new(world);
-    ECS_TAG(world, FriendsWith);
 
 // Adding components to entities
     ecs_add(world, lhgs, Position);
@@ -123,6 +124,9 @@ int main(int argc, char* argv[]) {
 
     ecs_add_pair(world, kweebeck1, EcsChildOf, kweebeck3);
     ecs_add_pair(world, kweebeck2, EcsChildOf, kweebeck3);
+
+    ecs_add_pair(world, kweebeck1, FriendsWith, kweebeck3);
+    ecs_add_pair(world, kweebeck2, FriendsWith, kweebeck4);
 
     // Prefab
     ecs_add_pair(world, chihuahua, EcsIsA, dog);
