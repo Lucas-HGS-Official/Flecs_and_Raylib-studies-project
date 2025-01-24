@@ -4,3 +4,4 @@ gcov
 bin
 vc140.pdb
 game
+obj/*
