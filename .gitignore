@@ -1,7 +1,7 @@
 .bake_cache
 .DS_Store
 gcov
-bin
+bin/*
 vc140.pdb
 game
 obj/*
