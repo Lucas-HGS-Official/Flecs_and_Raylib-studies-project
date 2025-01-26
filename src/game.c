@@ -76,6 +76,7 @@ int main(int argc, char* argv[]) {
 // Creating tags, Captal case by convention
     ecs_entity_t Good = ecs_new(world);
     ecs_entity_t Bad = ecs_new(world);
+    ECS_TAG(world, Player);
 
 // Adding components to entities
     ecs_add(world, lhgs, Position);
@@ -139,6 +140,8 @@ int main(int argc, char* argv[]) {
     ecs_add_id(world, lhgs, Bad);
     ecs_add_id(world, lucas, Good);
 
+    ecs_add_id(world, lhgs, Player);
+
 // Checking for tags
     if (ecs_has_id(world, lucas, Good)) {
         printf("Lucas is good doer.\n");
@@ -194,6 +197,13 @@ int main(int argc, char* argv[]) {
    ecs_query_t* kweebeckQueryFriendsWith = ecs_query(world, {
     .terms = {
         { .id = ecs_pair(FriendsWith, EcsWildcard) }
+    }
+   });
+
+    // Query for a Tag
+   ecs_query_t* playerQuery = ecs_query(world, {
+    .terms = {
+        { .id = Player }
     }
    });
 
