@@ -190,6 +190,13 @@ int main(int argc, char* argv[]) {
     }
    });
 
+    // Query for FriendsWith ralation, using a generic entity
+   ecs_query_t* kweebeckQueryFriendsWith = ecs_query(world, {
+    .terms = {
+        { .id = ecs_pair(FriendsWith, EcsWildcard) }
+    }
+   });
+
 
 
 // Creating a iterator
