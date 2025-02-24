@@ -34,6 +34,9 @@ typedef struct Greyhound {
     bool isAsleep;
 } Greyhound;
 
+// Declaring a method for Flecs system
+void iterateKweebecs(ecs_iter_t* it);
+
 int main(int argc, char* argv[]) {
 // Creating a flecs world
     ecs_world_t* world = ecs_init();
@@ -208,6 +211,17 @@ int main(int argc, char* argv[]) {
    });
 
 
+   // Simple System exemple
+   ecs_entity_t kweebeckSystem = ecs_system(world, {
+        .query.terms = {
+            { .id = ecs_id(Position), .oper = EcsOr  /* Adding a Query Operator */},
+            { .id = ecs_id(Elder), .inout = EcsIn /* Adding a access modifier, Read Only mode*/ }
+        },
+        // Calling a method in a system
+        .callback = iterateKweebecs
+    });
+
+
 
 // Creating a iterator
     ecs_iter_t it = ecs_query_iter(world, kweebeckQueryPos);
@@ -246,6 +260,20 @@ int main(int argc, char* argv[]) {
             printf("The elder's age is %d and is wise is: %d", kweebeckElder.age, kweebeckElder.isWise);
         }
     }
+
+    ecs_run(world, kweebeckSystem, 0, NULL);
 }
 
-// cc -o game src/game.c libs/flecs.c -Iinclude -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+void iterateKweebecs(ecs_iter_t* it) {
+    Position* position = ecs_field(it, Position, 0);
+    Elder* elder = ecs_field(it, Elder, 1);
+    for (int i = 0; i < it->count; i++) {
+        const char* name = ecs_get_name(it->world, it->entities[i]);
+        printf("%s has Position {%f, %f} and is %d years old\n",
+            name,
+            position[i].x,
+            position[i].y,
+            elder[i].age
+        );
+    }
+}
